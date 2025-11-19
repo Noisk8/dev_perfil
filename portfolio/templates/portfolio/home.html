@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section">
+    <div class="section__header">
+        <h2>Stack y focos</h2>
+        <p>Python creativo, automatización en Linux y frontends ligeros para ideas rápidas.</p>
+    </div>
+    <div class="cards cards--skills">
+        {% for skill in skills %}
+            <article class="card">
+                <h3>{{ skill.title }}</h3>
+                <ul class="skills">
+                    {% for item in skill.items %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section__header">
+        <h2>Proyectos seleccionados</h2>
+        <p>Repos orientados a Python, sistemas y frontend que muestran cómo trabajo.</p>
+    </div>
+    <div class="cards cards--projects">
+        {% for project in projects %}
+            <article class="card card--project">
+                <div class="card__head">
+                    <p class="pill pill--ghost">{{ project.area }}</p>
+                    <a href="{{ project.link }}" class="link" target="_blank" rel="noreferrer">Ver repo →</a>
+                </div>
+                <h3>{{ project.name }}</h3>
+                <p class="description">{{ project.description }}</p>
+                <div class="tags">
+                    {% for tech in project.tech %}
+                        <span>{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section__header">
+        <h2>Wikimedia</h2>
+        <p>Contribuciones en Wikidata y desarrollo de herramientas en Toolforge.</p>
+    </div>
+    <div class="cards cards--projects">
+        {% for contrib in wikimedia.contributions %}
+            <article class="card card--project">
+                <div class="card__head">
+                    <p class="pill pill--ghost">Contribución</p>
+                    <a href="{{ contrib.link }}" class="link" target="_blank" rel="noreferrer">Ver perfil →</a>
+                </div>
+                <h3>{{ contrib.title }}</h3>
+                <p class="description">{{ contrib.description }}</p>
+                <div class="tags">
+                    {% for tech in contrib.tech %}
+                        <span>{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </article>
+        {% endfor %}
+        {% for tool in wikimedia.tools %}
+            <article class="card card--project">
+                <div class="card__head">
+                    <p class="pill pill--ghost">Toolforge</p>
+                    <a href="{{ tool.link }}" class="link" target="_blank" rel="noreferrer">Abrir →</a>
+                </div>
+                <h3>{{ tool.name }}</h3>
+                <p class="description">{{ tool.description }}</p>
+                <div class="tags">
+                    {% for tech in tool.tech %}
+                        <span>{{ tech }}</span>
+                    {% endfor %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section section--cta">
+    <div class="cta">
+        <div>
+            <p class="eyebrow">Colaboremos</p>
+            <h3>¿Quieres algo similar?</h3>
+            <p>Automatizaciones en Linux, prototipos rápidos en Python o sitios Astro/TS para ideas creativas.</p>
+        </div>
+        <div class="cta__actions">
+            <a class="button" href="{{ profile.links.github }}" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="button button--ghost" href="mailto:{{ profile.name|lower }}@example.com">Escríbeme</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
