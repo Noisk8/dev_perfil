@@ -26,9 +26,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-ze&&p(9+=pj3wmy)u4b94%)v79
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-_raw_allowed_hosts = os.getenv("ALLOWED_HOSTS", ".vercel.app,localhost,127.0.0.1")
+_raw_allowed_hosts = os.getenv("ALLOWED_HOSTS", ".vercel.app,.railway.app,localhost,127.0.0.1")
 ALLOWED_HOSTS = [host.strip() for host in _raw_allowed_hosts.split(",") if host.strip()]
-_default_csrf = "https://*.vercel.app,http://localhost,http://127.0.0.1"
+_default_csrf = "https://*.vercel.app,https://*.railway.app,http://localhost,http://127.0.0.1"
 CSRF_TRUSTED_ORIGINS = [
     origin.strip() for origin in os.getenv("CSRF_TRUSTED_ORIGINS", _default_csrf).split(",") if origin.strip()
 ]
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,6 +125,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
