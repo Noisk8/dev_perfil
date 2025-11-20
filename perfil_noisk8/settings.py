@@ -26,9 +26,15 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-ze&&p(9+=pj3wmy)u4b94%)v79
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
-_raw_allowed_hosts = os.getenv("ALLOWED_HOSTS", ".vercel.app,.railway.app,localhost,127.0.0.1")
+_raw_allowed_hosts = os.getenv(
+    "ALLOWED_HOSTS",
+    ".vercel.app,.railway.app,.noisk8.xyz,localhost,127.0.0.1",
+)
 ALLOWED_HOSTS = [host.strip() for host in _raw_allowed_hosts.split(",") if host.strip()]
-_default_csrf = "https://*.vercel.app,https://*.railway.app,http://localhost,http://127.0.0.1"
+_default_csrf = (
+    "https://*.vercel.app,https://*.railway.app,https://*.noisk8.xyz,"
+    "http://localhost,http://127.0.0.1"
+)
 CSRF_TRUSTED_ORIGINS = [
     origin.strip() for origin in os.getenv("CSRF_TRUSTED_ORIGINS", _default_csrf).split(",") if origin.strip()
 ]
