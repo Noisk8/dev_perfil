@@ -1,0 +1,23 @@
+<svg width="640" height="640" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Ilustración de perfil</title>
+  <desc id="desc">Silhouette y fondo de gradiente para avatar</desc>
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop stop-color="#22d3ee" offset="0%"/>
+      <stop stop-color="#8b5cf6" offset="100%"/>
+    </linearGradient>
+    <radialGradient id="g2" cx="50%" cy="35%" r="65%">
+      <stop stop-color="rgba(255,255,255,0.6)" offset="0%"/>
+      <stop stop-color="rgba(255,255,255,0)" offset="100%"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="640" rx="72" fill="#07090f"/>
+  <rect x="40" y="40" width="560" height="560" rx="64" fill="url(#g1)" opacity="0.18"/>
+  <circle cx="320" cy="220" r="120" fill="url(#g2)"/>
+  <path d="M320 125c-60 0-85 36-85 82 0 46 27 82 85 82s85-36 85-82c0-46-25-82-85-82z" fill="#0c1220" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
+  <path d="M160 470c0-70 70-120 160-120s160 50 160 120v60H160z" fill="#0c1220" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
+  <circle cx="320" cy="238" r="74" fill="url(#g1)" opacity="0.65"/>
+  <path d="M260 448c25 10 45 14 60 14s35-4 60-14" stroke="rgba(255,255,255,0.25)" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <circle cx="230" cy="482" r="10" fill="rgba(34,211,238,0.8)"/>
+  <circle cx="410" cy="482" r="10" fill="rgba(139,92,246,0.8)"/>
+</svg>
