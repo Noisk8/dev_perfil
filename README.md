@@ -22,6 +22,28 @@ python manage.py runserver
 # Visita http://127.0.0.1:8000
 ```
 
+## Despliegue en Railway (autodeploy al hacer commit)
+
+El repo incluye `nixpacks.toml` y `Procfile` para que Railway construya y arranque sin pasos manuales.
+
+### Variables de entorno requeridas
+- `SECRET_KEY` (valor fuerte)
+- `DEBUG=false`
+- `ALLOWED_HOSTS=.railway.app,.vercel.app,localhost,127.0.0.1`
+- `CSRF_TRUSTED_ORIGINS=https://*.railway.app,https://*.vercel.app,http://localhost,http://127.0.0.1`
+- Opcional: `DATABASE_URL` si usas DB externa.
+
+### Cuándo corre cada comando (ver `nixpacks.toml`)
+- Setup: `pip install -r requirements.txt`
+- Build: `python manage.py collectstatic --noinput` y `python manage.py migrate --noinput`
+- Start: `gunicorn perfil_noisk8.wsgi:application --bind 0.0.0.0:${PORT:-8000}`
+
+### Pasos en Railway
+1. Conecta tu repo de GitHub al servicio en Railway.
+2. En Variables, agrega las vars anteriores (puedes basarte en `.env.example`).
+3. Deploy: al hacer push, Railway ejecuta los comandos anteriores y expone la app en tu dominio `*.railway.app`.
+4. Verifica que `https://<tu>.railway.app/static/portfolio/styles.css` responde 200 para confirmar que `collectstatic` corrió.
+
 ## Despliegue en GitHub (código)
 1. Crea un repo vacío en GitHub.
 2. Desde este directorio:
@@ -39,11 +61,11 @@ python manage.py runserver
 
 ## Personalizar contenido
 - La data que nutre la página está en `portfolio/views.py` (perfil, skills, proyectos). Modifícala con nuevos repos o descripciones.
-- Los estilos viven en `portfolio/static/portfolio/styles.css`.
+- Los estilos viven en `static/portfolio/styles.css`.
 - Templates en `templates/base.html` y `portfolio/templates/portfolio/home.html`.
 
 ## Estructura rápida
 - `perfil_noisk8/` configuración del proyecto Django.
 - `portfolio/` app que sirve la página con data estática.
 - `templates/` templates compartidos.
-- `portfolio/static/portfolio/` estilos.
+- `static/portfolio/` estilos.
