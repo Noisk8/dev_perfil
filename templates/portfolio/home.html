@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="cv-hero">
+  <div>
+    <p class="eyebrow">Perfil</p>
+    <h1 class="cv-name">{{ profile.name }}</h1>
+    <p class="cv-tagline">{{ profile.tagline }}</p>
+    <p class="cv-bio">{{ profile.bio }}</p>
+    <div class="cv-meta">
+      <a class="pill pill--bright" href="{{ profile.links.github }}" target="_blank" rel="noopener">GitHub</a>
+      <a class="pill pill--bright" href="{{ profile.links.website }}" target="_blank" rel="noopener">Portafolio</a>
+      <a class="pill pill--bright" href="{{ profile.links.twitter }}" target="_blank" rel="noopener">X / Twitter</a>
+    </div>
+  </div>
+  <div class="cv-hero__side">
+    <div class="avatar-wrap">
+      <img src="{% static 'portfolio/profile.svg' %}" alt="{{ profile.name }}">
+    </div>
+    <div class="cv-badges">
+      <span class="pill pill--ghost">Ubicación: {{ profile.location }}</span>
+      <span class="pill pill--ghost">Infra y datos abiertos</span>
+    </div>
+  </div>
+</section>
+
+<section class="cv-summary">
+  <div class="summary-card">
+    <h2>Resumen</h2>
+    <p>Experimentos en Python (Django, audio, automatización) y despliegues ligeros en Linux con enfoque en privacidad.</p>
+    <div class="summary-tags">
+      <span>Livecoding</span><span>Tooling CLI</span><span>Infra auto-hosteada</span><span>Wikimedia</span>
+    </div>
+  </div>
+  <div class="contact-card">
+    <h2>Contacto</h2>
+    <ul>
+      <li><strong>GitHub:</strong> <a href="{{ profile.links.github }}" target="_blank" rel="noopener">{{ profile.name }}</a></li>
+      <li><strong>Web:</strong> <a href="{{ profile.links.website }}" target="_blank" rel="noopener">{{ profile.links.website }}</a></li>
+      <li><strong>Redes:</strong> <a href="{{ profile.links.twitter }}" target="_blank" rel="noopener">@noisk8</a></li>
+      <li><strong>Ciudad:</strong> {{ profile.location }}</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cv-grid">
+  <div class="cv-section">
+    <div class="section__header">
+      <p class="eyebrow">Skills</p>
+      <h2>Stack y enfoque</h2>
+      <p>Mezcla de backend creativo, sistemas y frontend ligero.</p>
+    </div>
+    <div class="cards cards--skills">
+      {% for bucket in skills %}
+      <div class="card">
+        <p class="eyebrow">{{ bucket.title }}</p>
+        <ul class="skills">
+          {% for item in bucket.items %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="cv-section">
+    <div class="section__header">
+      <p class="eyebrow">Proyectos</p>
+      <h2>Repos activos</h2>
+      <p>Muestras de código y experimentación.</p>
+    </div>
+    <div class="cards cards--projects">
+      {% for project in projects %}
+      <div class="card card--project">
+        <div class="card__head">
+          <div>
+            <p class="eyebrow">{{ project.area }}</p>
+            <a class="link" href="{{ project.link }}" target="_blank" rel="noopener">{{ project.name }}</a>
+          </div>
+        </div>
+        <p class="description">{{ project.description }}</p>
+        <div class="tags">
+          {% for tech in project.tech %}
+            <span>{{ tech }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="cv-section">
+    <div class="section__header">
+      <p class="eyebrow">Wikimedia</p>
+      <h2>Contribuciones y herramientas</h2>
+      <p>Datos abiertos, Toolforge y documentación.</p>
+    </div>
+    <div class="list-cards">
+      {% for item in wikimedia.contributions %}
+      <div class="list-card">
+        <div class="list-card__meta">
+          <a class="link" href="{{ item.link }}" target="_blank" rel="noopener">{{ item.title }}</a>
+          <div class="tags">
+            {% for tech in item.tech %}
+              <span>{{ tech }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        <p class="muted">{{ item.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="section__header" style="margin-top:16px;">
+      <p class="eyebrow">Toolforge</p>
+      <h3>Apps activas</h3>
+    </div>
+    <div class="list-cards">
+      {% for tool in wikimedia.tools %}
+      <div class="list-card">
+        <div class="list-card__meta">
+          <a class="link" href="{{ tool.link }}" target="_blank" rel="noopener">{{ tool.name }}</a>
+          <div class="tags">
+            {% for tech in tool.tech %}
+              <span>{{ tech }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        <p class="muted">{{ tool.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="cv-section section--cta">
+    <div class="cta">
+      <div>
+        <p class="eyebrow">Colab</p>
+        <h2>¿Construimos algo?</h2>
+        <p class="muted">Abierto a proyectos de audio, data abierta o infraestructura auto-hosteada.</p>
+      </div>
+      <div class="cta__actions">
+        <a class="button" href="{{ profile.links.github }}" target="_blank" rel="noopener">GitHub</a>
+        <a class="button button--ghost" href="{{ profile.links.twitter }}" target="_blank" rel="noopener">Escríbeme</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
