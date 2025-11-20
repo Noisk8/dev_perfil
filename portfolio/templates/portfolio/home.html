@@ -1,33 +1,121 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="section">
-    <div class="section__header">
-        <h2>Stack y focos</h2>
-        <p>Python creativo, automatización en Linux y frontends ligeros para ideas rápidas.</p>
+<section class="cv-hero">
+    <div class="cv-hero__main">
+        <p class="eyebrow">Perfil dev · Livecoding · Sysadmin</p>
+        <h1 class="cv-name">{{ profile.name }}</h1>
+        <p class="cv-tagline">{{ profile.tagline }}</p>
+        <p class="cv-bio">{{ profile.bio }}</p>
+        <div class="cv-meta">
+            <span class="pill pill--bright">📍 {{ profile.location }}</span>
+            <a class="pill" href="{{ profile.links.github }}" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="pill" href="{{ profile.links.website }}" target="_blank" rel="noreferrer">Portfolio</a>
+            <a class="pill" href="{{ profile.links.twitter }}" target="_blank" rel="noreferrer">X/Twitter</a>
+        </div>
     </div>
-    <div class="cards cards--skills">
-        {% for skill in skills %}
-            <article class="card">
-                <h3>{{ skill.title }}</h3>
-                <ul class="skills">
-                    {% for item in skill.items %}
-                        <li>{{ item }}</li>
-                    {% endfor %}
-                </ul>
-            </article>
-        {% endfor %}
+    <div class="cv-hero__side">
+        <div class="avatar-wrap">
+            <img src="{% static 'portfolio/profile.svg' %}" alt="Retrato de {{ profile.name }}">
+        </div>
+        <div class="cv-badges">
+            <span>Python · Linux · Frontend</span>
+            <span>Hands-on + experimental</span>
+        </div>
     </div>
 </section>
 
-<section class="section">
+<section class="cv-summary">
+    <div class="summary-card">
+        <h2>Resumen</h2>
+        <p>Construyo herramientas creativas con Python, despliego infra en Linux y hago frontends ligeros para iterar rápido. Contribuyo en Wikimedia (Wikidata/Toolforge) y hago livecoding audiovisual.</p>
+        <div class="summary-tags">
+            <span>Automatización</span><span>SPARQL</span><span>CLI</span><span>Audio/Video</span><span>Astro/TS</span>
+        </div>
+    </div>
+    <div class="contact-card">
+        <h2>Contacto</h2>
+        <ul>
+            <li><strong>GitHub:</strong> <a href="{{ profile.links.github }}" target="_blank" rel="noreferrer">{{ profile.links.github }}</a></li>
+            <li><strong>Portfolio:</strong> <a href="{{ profile.links.website }}" target="_blank" rel="noreferrer">{{ profile.links.website }}</a></li>
+            <li><strong>X/Twitter:</strong> <a href="{{ profile.links.twitter }}" target="_blank" rel="noreferrer">{{ profile.links.twitter }}</a></li>
+            <li><strong>Email:</strong> <a href="mailto:{{ profile.name|lower }}@example.com">{{ profile.name|lower }}@example.com</a></li>
+        </ul>
+    </div>
+</section>
+
+<section class="cv-grid">
+    <div class="cv-section">
+        <div class="section__header">
+            <h2>Stack y focos</h2>
+            <p>Python creativo, automatización en Linux y frontends ligeros.</p>
+        </div>
+        <div class="cards cards--skills">
+            {% for skill in skills %}
+                <article class="card">
+                    <h3>{{ skill.title }}</h3>
+                    <ul class="skills">
+                        {% for item in skill.items %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="cv-section">
+        <div class="section__header">
+            <h2>Wikimedia</h2>
+            <p>Contribuciones en Wikidata y herramientas en Toolforge.</p>
+        </div>
+        <div class="list-cards">
+            {% for contrib in wikimedia.contributions %}
+                <article class="list-card">
+                    <div>
+                        <p class="pill pill--ghost">Contribución</p>
+                        <h3>{{ contrib.title }}</h3>
+                        <p class="muted">{{ contrib.description }}</p>
+                    </div>
+                    <div class="list-card__meta">
+                        <a href="{{ contrib.link }}" class="link" target="_blank" rel="noreferrer">Ver perfil →</a>
+                        <div class="tags">
+                            {% for tech in contrib.tech %}
+                                <span>{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+            {% for tool in wikimedia.tools %}
+                <article class="list-card">
+                    <div>
+                        <p class="pill pill--ghost">Toolforge</p>
+                        <h3>{{ tool.name }}</h3>
+                        <p class="muted">{{ tool.description }}</p>
+                    </div>
+                    <div class="list-card__meta">
+                        <a href="{{ tool.link }}" class="link" target="_blank" rel="noreferrer">Abrir →</a>
+                        <div class="tags">
+                            {% for tech in tool.tech %}
+                                <span>{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="cv-section">
     <div class="section__header">
-        <h2>Proyectos seleccionados</h2>
-        <p>Repos orientados a Python, sistemas y frontend que muestran cómo trabajo.</p>
+        <h2>Proyectos destacados</h2>
+        <p>Repos orientados a Python, sistemas y frontend.</p>
     </div>
     <div class="cards cards--projects">
         {% for project in projects %}
-            <article class="card card--project">
+            <article class="card card--project card--cv">
                 <div class="card__head">
                     <p class="pill pill--ghost">{{ project.area }}</p>
                     <a href="{{ project.link }}" class="link" target="_blank" rel="noreferrer">Ver repo →</a>
@@ -36,45 +124,6 @@
                 <p class="description">{{ project.description }}</p>
                 <div class="tags">
                     {% for tech in project.tech %}
-                        <span>{{ tech }}</span>
-                    {% endfor %}
-                </div>
-            </article>
-        {% endfor %}
-    </div>
-</section>
-
-<section class="section">
-    <div class="section__header">
-        <h2>Wikimedia</h2>
-        <p>Contribuciones en Wikidata y desarrollo de herramientas en Toolforge.</p>
-    </div>
-    <div class="cards cards--projects">
-        {% for contrib in wikimedia.contributions %}
-            <article class="card card--project">
-                <div class="card__head">
-                    <p class="pill pill--ghost">Contribución</p>
-                    <a href="{{ contrib.link }}" class="link" target="_blank" rel="noreferrer">Ver perfil →</a>
-                </div>
-                <h3>{{ contrib.title }}</h3>
-                <p class="description">{{ contrib.description }}</p>
-                <div class="tags">
-                    {% for tech in contrib.tech %}
-                        <span>{{ tech }}</span>
-                    {% endfor %}
-                </div>
-            </article>
-        {% endfor %}
-        {% for tool in wikimedia.tools %}
-            <article class="card card--project">
-                <div class="card__head">
-                    <p class="pill pill--ghost">Toolforge</p>
-                    <a href="{{ tool.link }}" class="link" target="_blank" rel="noreferrer">Abrir →</a>
-                </div>
-                <h3>{{ tool.name }}</h3>
-                <p class="description">{{ tool.description }}</p>
-                <div class="tags">
-                    {% for tech in tool.tech %}
                         <span>{{ tech }}</span>
                     {% endfor %}
                 </div>
