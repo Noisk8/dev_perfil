@@ -33,7 +33,7 @@ _env_hosts = [host.strip() for host in _raw_allowed_hosts.split(",") if host.str
 ALLOWED_HOSTS = sorted(set(_env_hosts + [h.strip() for h in _default_hosts.split(",") if h.strip()]))
 _default_csrf = (
     "https://*.vercel.app,https://*.railway.app,https://*.noisk8.xyz,"
-    "http://localhost,http://127.0.0.1"
+    "http://*.noisk8.xyz,http://localhost,http://127.0.0.1"
 )
 CSRF_TRUSTED_ORIGINS = sorted(
     set(
