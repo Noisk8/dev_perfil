@@ -4,11 +4,11 @@ from django.shortcuts import render
 def home(request):
     profile = {
         "name": "Noisk8",
-        "tagline": "Livecoder, Pythonista, operador de nodos y contribuidor Wikimedia.",
+        "tagline": "Livecoder, Pythonista, Node Operator y contribuidor Wikimedia.",
         "bio": (
-            "Desarrollo herramientas y experiencias creativas con Python, automatizo tareas en Linux "
+            "Desarrolloador Multimedia y experiencias creativas con Python y javascript, automatizo tareas en Linux "
             "y despliego infra que prioriza privacidad. Contribuyo en el ecosistema Wikimedia "
-            "(Wikidata/Toolforge) y experimento con frontend (Astro/TS) para dar forma a ideas rápidas."
+            "(Wikidata/Toolforge) y experimento con frontend (Astro/NextJs/ReactJs/ TS) para dar forma a ideas rápidas."
         ),
         "location": "Medellín, Colombia",
         "links": {
@@ -75,6 +75,27 @@ def home(request):
     }
 
     projects = [
+        {
+            "name": "Hidropoéticas",
+            "description": "Sitio web performativo con narrativa audiovisual y exploración territorial.",
+            "tech": ["Frontend", "Astro"],
+            "link": "https://hidropoeticas-web.vercel.app/",
+            "area": "Frontend",
+        },
+        {
+            "name": "Yo quiero aprender",
+            "description": "Plataforma educativa de Platohedro con contenidos y recursos interactivos.",
+            "tech": ["Frontend", "Experiencias educativas"],
+            "link": "https://yoquieroaprender.platohedro.org/",
+            "area": "Frontend",
+        },
+        {
+            "name": "Territorios de Gol",
+            "description": "Sitio narrativo sobre fútbol, territorio y comunidad.",
+            "tech": ["Frontend", "Storytelling"],
+            "link": "https://territoriosdegol.motivandoalagyal.org/",
+            "area": "Frontend",
+        },
         {
             "name": "Instalando-Renardo-FoxDot-En-linux",
             "description": "Script Bash para dejar listo el entorno de livecoding Renardo/FoxDot en Linux.",
