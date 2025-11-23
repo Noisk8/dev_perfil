@@ -1,6 +1,6 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ request.LANGUAGE_CODE|default:'es' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="{% static 'portfolio/styles.css' %}">
 </head>
 <body>
+    <header class="lang-switch">
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.path }}">
+            <label for="language">{% trans "Idioma" %}:</label>
+            <select name="language" id="language" onchange="this.form.submit()">
+                <option value="es"{% if request.LANGUAGE_CODE == 'es' %} selected{% endif %}>Español</option>
+                <option value="en"{% if request.LANGUAGE_CODE == 'en' %} selected{% endif %}>English</option>
+            </select>
+        </form>
+    </header>
     <main class="page page--cv">
         {% block content %}{% endblock %}
     </main>
