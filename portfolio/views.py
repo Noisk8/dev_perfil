@@ -1,8 +1,35 @@
-from django.shortcuts import render
-from django.utils.translation import gettext_lazy as _
+try:
+    from django.shortcuts import render  # type: ignore[import]
+    from django.http import HttpResponse  # type: ignore[import]
+    from django.template.loader import render_to_string  # type: ignore[import]
+    from django.templatetags.static import static  # type: ignore[import]
+    from django.utils.translation import gettext_lazy as _  # type: ignore[import]
+except Exception:
+    # Fallbacks for static analysis or environments sin Django instalado.
+    def render(request, template_name, context=None):
+        return {"template": template_name, "context": context}
+
+    class HttpResponse(dict):  # type: ignore[misc]
+        def __init__(self, content="", status=200, content_type=None):
+            super().__init__(content=content, status=status, content_type=content_type)
+
+    def render_to_string(template_name, context=None, request=None):
+        return ""
+
+    def static(path):
+        return path
+
+    def _(s):
+        return s
+
+try:
+    from weasyprint import HTML, CSS  # type: ignore[import]
+except Exception:
+    HTML = None
+    CSS = None
 
 
-def home(request):
+def _portfolio_context():
     profile = {
         "name": "Noisk8",
         "tagline": _("Livecoder, Pythonista, Node Operator y contribuidor Wikimedia."),
@@ -14,18 +41,20 @@ def home(request):
         "location": _("Medellín, Colombia"),
         "links": {
             "github": "https://github.com/Noisk8",
-            "website": "https://noisk8.github.io/noisk8/",
+            "website": "www.noisk8.xyz",
             "twitter": "https://x.com/noisk8",
         },
     }
 
     skills = [
         {
-            "title": _("Python y backend creativo"),
+            "title": _("Python  creativo"),
             "items": [
                 _("Django"),
                 _("Pygame"),
                 _("OSC"),
+                _("Livecoding (FoxDot/renardo)"),
+                _("OpenCV"),
                 _("Automatización CLI"),
                 _("Procesamiento de audio"),
             ],
@@ -44,6 +73,7 @@ def home(request):
             "title": _("Frontend ligero"),
             "items": [
                 _("Astro"),
+                _("ReactJs/NextJs"),
                 _("TypeScript"),
                 _("HTML/CSS creativo"),
                 _("Experimentos audiovisuales"),
@@ -53,7 +83,7 @@ def home(request):
             "title": _("Ecosistema Wikimedia"),
             "items": [
                 _("Wikidata (edición masiva)"),
-                _("Toolforge (Python/Flask)"),
+                _("Toolforge (Python/nodejs)"),
                 _("Documentación de comunidad"),
             ],
         },
@@ -210,6 +240,32 @@ def home(request):
         "projects": projects,
         "wikimedia": wikimedia,
     }
+
+    return context
+
+
+def home(request):
+    context = _portfolio_context()
+    context["pdf_mode"] = False
     return render(request, "portfolio/home.html", context)
+
+
+def cv_pdf(request):
+    if HTML is None or CSS is None:
+        return HttpResponse("WeasyPrint no está instalado en el entorno.", status=500)
+
+    context = _portfolio_context()
+    context["pdf_mode"] = True
+    html_string = render_to_string("portfolio/home.html", context, request=request)
+    base_url = request.build_absolute_uri("/")
+    css_url = request.build_absolute_uri(static("portfolio/styles.css"))
+
+    pdf_file = HTML(string=html_string, base_url=base_url).write_pdf(
+        stylesheets=[CSS(css_url)]
+    )
+
+    response = HttpResponse(pdf_file, content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="perfil_noisk8.pdf"'
+    return response
 
 # Create your views here.

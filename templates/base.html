@@ -8,17 +8,19 @@
     <link rel="stylesheet" href="{% static 'portfolio/styles.css' %}">
 </head>
 <body>
-    <header class="lang-switch">
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.path }}">
-            <label for="language">{% trans "Idioma" %}:</label>
-            <select name="language" id="language" onchange="this.form.submit()">
-                <option value="es"{% if request.LANGUAGE_CODE == 'es' %} selected{% endif %}>Español</option>
-                <option value="en"{% if request.LANGUAGE_CODE == 'en' %} selected{% endif %}>English</option>
-            </select>
-        </form>
-    </header>
+    {% if not pdf_mode %}
+        <header class="lang-switch">
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <label for="language">{% trans "Idioma" %}:</label>
+                <select name="language" id="language" onchange="this.form.submit()">
+                    <option value="es"{% if request.LANGUAGE_CODE == 'es' %} selected{% endif %}>Español</option>
+                    <option value="en"{% if request.LANGUAGE_CODE == 'en' %} selected{% endif %}>English</option>
+                </select>
+            </form>
+        </header>
+    {% endif %}
     <main class="page page--cv">
         {% block content %}{% endblock %}
     </main>

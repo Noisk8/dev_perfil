@@ -33,7 +33,8 @@ _env_hosts = [host.strip() for host in _raw_allowed_hosts.split(",") if host.str
 ALLOWED_HOSTS = sorted(set(_env_hosts + [h.strip() for h in _default_hosts.split(",") if h.strip()]))
 _default_csrf = (
     "https://*.vercel.app,https://*.railway.app,https://*.noisk8.xyz,"
-    "http://*.noisk8.xyz,http://localhost,http://127.0.0.1"
+    "http://*.noisk8.xyz,https://devperfil.noisk8.xyz,http://devperfil.noisk8.xyz,"
+    "http://localhost,http://127.0.0.1"
 )
 CSRF_TRUSTED_ORIGINS = sorted(
     set(
@@ -42,6 +43,10 @@ CSRF_TRUSTED_ORIGINS = sorted(
         if origin.strip()
     )
 )
+
+_csrf_cookie_domain = os.getenv("CSRF_COOKIE_DOMAIN")
+if _csrf_cookie_domain:
+    CSRF_COOKIE_DOMAIN = _csrf_cookie_domain
 
 
 # Application definition

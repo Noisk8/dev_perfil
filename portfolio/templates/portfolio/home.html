@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% block content %}
 <section class="cv-hero">
@@ -13,6 +13,7 @@
             <a class="pill" href="{{ profile.links.github }}" target="_blank" rel="noreferrer">GitHub</a>
             <a class="pill" href="{{ profile.links.website }}" target="_blank" rel="noreferrer">Portfolio</a>
             <a class="pill" href="{{ profile.links.twitter }}" target="_blank" rel="noreferrer">X/Twitter</a>
+            <a class="pill pill--bright" href="{% url 'cv_pdf' %}">{% trans "Descargar PDF" %}</a>
         </div>
     </div>
     <div class="cv-hero__side">
